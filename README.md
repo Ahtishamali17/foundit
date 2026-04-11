@@ -636,7 +636,7 @@ Distributed under the **MIT License**. See `LICENSE` for more information.
 
 [![GitHub](https://img.shields.io/badge/GitHub-Ahtishamali17-6366f1?style=flat-square&logo=github)](https://github.com/Ahtishamali17)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?style=flat-square&logo=linkedin)](https://linkedin.com/in/ahtishamali17)
-[![Email](https://img.shields.io/badge/Email-ahtisham@niet.co.in-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:ahtisham@niet.co.in)
+[![Email](https://img.shields.io/badge/Email-ahtisham@niet.co.in-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:theali0017@gmai.com)
 
 </div>
 
