@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>FoundIt — NIET Noida Lost & Found</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg-void:#060612;--bg-deep:#0c0c1e;--bg-surface:#11112a;--bg-raised:#181836;--glass:rgba(255,255,255,0.04);--glass-md:rgba(255,255,255,0.07);--glass-hi:rgba(255,255,255,0.12);--border:rgba(255,255,255,0.08);--border-hi:rgba(255,255,255,0.18);--indigo:#6366f1;--indigo-glow:rgba(99,102,241,0.35);--violet:#8b5cf6;--cyan:#22d3ee;--rose:#f43f5e;--emerald:#10b981;--amber:#f59e0b;--text-primary:#f0f0ff;--text-secondary:rgba(240,240,255,0.6);--text-muted:rgba(240,240,255,0.35);--font-display:'Syne',sans-serif;--font-body:'DM Sans',sans-serif;--radius-sm:8px;--radius-md:14px;--radius-lg:20px;--radius-xl:28px;--transition:0.25s cubic-bezier(0.4,0,0.2,1);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font-body);background:var(--bg-void);color:var(--text-primary);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+.bg-orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:0.15;animation:drift 20s ease-in-out infinite;}
+.orb-1{width:600px;height:600px;background:var(--indigo);top:-20%;left:-10%;}
+.orb-2{width:500px;height:500px;background:var(--violet);top:30%;right:-15%;animation-delay:-7s;}
+.orb-3{width:400px;height:400px;background:var(--cyan);bottom:-10%;left:20%;animation-delay:-14s;opacity:0.1;}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1);}33%{transform:translate(30px,-40px) scale(1.05);}66%{transform:translate(-20px,30px) scale(0.95);}}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:0 2rem;height:64px;display:flex;align-items:center;justify-content:space-between;background:rgba(6,6,18,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:var(--font-display);font-size:1.25rem;font-weight:800;background:linear-gradient(135deg,var(--indigo),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;cursor:pointer;}
+.nav-links{display:flex;gap:0.25rem;}
+.nav-link{font-size:0.875rem;color:var(--text-secondary);padding:0.5rem 0.875rem;border-radius:var(--radius-sm);cursor:pointer;transition:var(--transition);border:none;background:none;font-family:var(--font-body);}
+.nav-link:hover,.nav-link.active{color:var(--text-primary);background:var(--glass-md);}
+.nav-cta{font-size:0.875rem;font-weight:500;color:#fff;padding:0.5rem 1.25rem;border-radius:var(--radius-sm);cursor:pointer;transition:var(--transition);border:none;background:linear-gradient(135deg,var(--indigo),var(--violet));font-family:var(--font-body);}
+.nav-cta:hover{opacity:0.85;transform:translateY(-1px);}
+.nav-user{display:flex;align-items:center;gap:0.75rem;}
+.nav-user-name{font-size:0.85rem;color:var(--text-secondary);}
+.nav-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),var(--violet));display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;cursor:pointer;}
+main{position:relative;z-index:2;}
+.page{display:none;}.page.active{display:block;}
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 4rem;}
+.hero-badge{display:inline-flex;align-items:center;gap:0.5rem;padding:0.375rem 1rem;border-radius:100px;background:rgba(99,102,241,0.15);border:1px solid rgba(99,102,241,0.3);font-size:0.78rem;font-weight:500;color:#a5b4fc;margin-bottom:2rem;animation:fadeUp 0.6s ease both,floatBadge 3s ease-in-out 1s infinite;}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--indigo);animation:pulse 2s ease infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+@keyframes floatBadge{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.hero h1{font-family:var(--font-display);font-size:clamp(1.8rem,4vw,3.2rem);font-weight:800;line-height:1.1;letter-spacing:-0.04em;margin-bottom:1.5rem;}
+.word{display:inline-block;opacity:0;transform:translateY(24px);animation:wordUp 0.5s cubic-bezier(0.4,0,0.2,1) forwards;}
+.w1{animation-delay:0.1s;}.w2{animation-delay:0.2s;}.w3{animation-delay:0.3s;}.w4{animation-delay:0.4s;}.w5{animation-delay:0.5s;}
+@keyframes wordUp{to{opacity:1;transform:translateY(0);}}
+.gradient-text{background:linear-gradient(135deg,var(--indigo) 0%,var(--cyan) 40%,var(--violet) 70%,var(--indigo) 100%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s linear infinite;}
+@keyframes shimmer{to{background-position:200% center;}}
+.hero-sub{font-size:1rem;color:var(--text-secondary);max-width:560px;line-height:1.7;margin-bottom:3rem;animation:fadeUp 0.6s ease 0.3s both;}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;animation:fadeUp 0.6s ease 0.35s both;}
+.hero-stats{display:flex;gap:3rem;flex-wrap:wrap;justify-content:center;margin-top:4rem;animation:fadeUp 0.6s ease 0.4s both;}
+.hero-stat{text-align:center;}
+.hero-stat-num{font-family:var(--font-display);font-size:2rem;font-weight:700;background:linear-gradient(135deg,var(--indigo),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-stat-label{font-size:0.8rem;color:var(--text-muted);margin-top:0.25rem;text-transform:uppercase;letter-spacing:0.05em;}
+/* BUTTONS */
+.btn-primary{padding:0.875rem 2rem;border-radius:var(--radius-md);background:linear-gradient(135deg,var(--indigo),var(--violet));color:#fff;font-weight:600;font-size:0.9rem;border:none;cursor:pointer;transition:var(--transition);font-family:var(--font-body);box-shadow:0 0 30px rgba(99,102,241,0.3);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(99,102,241,0.5);}
+.btn-primary:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
+.btn-secondary{padding:0.875rem 2rem;border-radius:var(--radius-md);background:var(--glass-md);color:var(--text-primary);font-weight:500;font-size:0.9rem;border:1px solid var(--border-hi);cursor:pointer;transition:var(--transition);font-family:var(--font-body);backdrop-filter:blur(10px);}
+.btn-secondary:hover{background:var(--glass-hi);transform:translateY(-2px);}
+/* SECTIONS */
+.section{padding:5rem 2rem;max-width:1200px;margin:0 auto;}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem;}
+.section-title{font-family:var(--font-display);font-size:1.75rem;font-weight:700;letter-spacing:-0.03em;}
+.section-title span{color:var(--text-secondary);font-weight:400;}
+.section-link{font-size:0.875rem;color:#a5b4fc;cursor:pointer;background:none;border:none;font-family:var(--font-body);transition:var(--transition);}
+/* CARDS */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;}
+.item-card{background:var(--glass);border:1px solid var(--border);border-radius:var(--radius-xl);overflow:hidden;cursor:pointer;transition:var(--transition);backdrop-filter:blur(20px);position:relative;}
+.item-card::before{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(255,255,255,0.06) 0%,transparent 60%);pointer-events:none;}
+.item-card:hover{border-color:var(--border-hi);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,0.4);}
+.item-card-img{width:100%;height:180px;background:var(--bg-raised);display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;overflow:hidden;}
+.item-card-img img{width:100%;height:100%;object-fit:cover;}
+.item-card-badge{position:absolute;top:12px;left:12px;padding:0.3rem 0.75rem;border-radius:100px;font-size:0.7rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;}
+.badge-lost{background:rgba(244,63,94,0.25);color:#fb7185;border:1px solid rgba(244,63,94,0.3);}
+.badge-found{background:rgba(16,185,129,0.2);color:#34d399;border:1px solid rgba(16,185,129,0.25);}
+.badge-resolved{background:rgba(99,102,241,0.2);color:#a5b4fc;border:1px solid rgba(99,102,241,0.3);}
+.item-card-body{padding:1.25rem;}
+.item-card-cat{font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem;}
+.item-card-title{font-family:var(--font-display);font-size:1rem;font-weight:600;margin-bottom:0.5rem;}
+.item-card-desc{font-size:0.85rem;color:var(--text-secondary);line-height:1.6;margin-bottom:1rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.item-card-meta{display:flex;align-items:center;justify-content:space-between;}
+.item-card-loc{font-size:0.78rem;color:var(--text-muted);}
+.item-card-date{font-size:0.75rem;color:var(--text-muted);}
+/* PAGE HEADER */
+.page-header{padding:7rem 2rem 3rem;max-width:1200px;margin:0 auto;}
+.page-header-title{font-family:var(--font-display);font-size:2.5rem;font-weight:800;letter-spacing:-0.04em;margin-bottom:0.5rem;}
+.page-header-sub{color:var(--text-secondary);font-size:1rem;}
+/* FILTERS */
+.filters-bar{display:flex;gap:0.75rem;flex-wrap:wrap;margin-bottom:2rem;align-items:center;}
+.filter-input{background:var(--glass-md);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);padding:0.6rem 1rem;font-family:var(--font-body);font-size:0.875rem;outline:none;transition:var(--transition);flex:1;min-width:200px;}
+.filter-select{background:var(--glass-md);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text-primary);padding:0.6rem 1rem;font-family:var(--font-body);font-size:0.875rem;outline:none;cursor:pointer;}
+.filter-select option{background:var(--bg-deep);}
+.filter-btn{padding:0.6rem 1.25rem;border-radius:var(--radius-sm);background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.25);color:#a5b4fc;font-size:0.875rem;font-family:var(--font-body);cursor:pointer;transition:var(--transition);}
+.filter-btn:hover,.filter-btn.active{background:rgba(99,102,241,0.3);}
+/* LOADING */
+.loading{text-align:center;padding:3rem;color:var(--text-muted);}
+.spinner{display:inline-block;width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--indigo);border-radius:50%;animation:spin 0.8s linear infinite;margin-bottom:1rem;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.empty-state{text-align:center;padding:4rem 2rem;color:var(--text-muted);}
+.empty-state-icon{font-size:3rem;margin-bottom:1rem;}
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;z-index:200;background:rgba(6,6,18,0.85);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:2rem;opacity:0;pointer-events:none;transition:opacity 0.3s ease;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{background:var(--bg-surface);border:1px solid var(--border-hi);border-radius:var(--radius-xl);max-width:700px;width:100%;max-height:90vh;overflow-y:auto;transform:translateY(20px) scale(0.98);transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);position:relative;}
+.modal-overlay.open .modal{transform:translateY(0) scale(1);}
+.modal-close{position:absolute;top:1rem;right:1rem;width:32px;height:32px;border-radius:50%;background:var(--glass-md);border:1px solid var(--border);color:var(--text-secondary);cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
+.modal-img{width:100%;height:240px;background:var(--bg-raised);display:flex;align-items:center;justify-content:center;font-size:5rem;border-radius:var(--radius-xl) var(--radius-xl) 0 0;overflow:hidden;}
+.modal-img img{width:100%;height:100%;object-fit:cover;}
+.modal-body{padding:2rem;}
+.modal-title{font-family:var(--font-display);font-size:1.5rem;font-weight:700;margin:0.75rem 0 0.5rem;}
+.modal-desc{color:var(--text-secondary);line-height:1.7;margin-bottom:1.5rem;}
+.modal-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
+.modal-info-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-muted);margin-bottom:0.3rem;}
+.modal-info-value{font-size:0.9rem;}
+.modal-actions{display:flex;gap:0.75rem;flex-wrap:wrap;}
+.btn-contact{flex:1;padding:0.875rem;border-radius:var(--radius-md);background:linear-gradient(135deg,var(--indigo),var(--violet));color:#fff;font-weight:600;font-size:0.9rem;border:none;cursor:pointer;transition:var(--transition);font-family:var(--font-body);}
+.btn-contact:hover{opacity:0.85;}
+.btn-claim{flex:1;padding:0.875rem;border-radius:var(--radius-md);background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.3);color:#34d399;font-weight:500;font-size:0.9rem;cursor:pointer;transition:var(--transition);font-family:var(--font-body);}
+/* FORM */
+.form-container{max-width:720px;margin:0 auto;padding:2rem;}
+.form-page-title{font-family:var(--font-display);font-size:2rem;font-weight:700;margin-bottom:0.5rem;}
+.form-page-sub{color:var(--text-secondary);margin-bottom:2.5rem;}
+.form-card{background:var(--glass);border:1px solid var(--border);border-radius:var(--radius-xl);padding:2.5rem;backdrop-filter:blur(20px);}
+.form-step-indicator{display:flex;gap:0.5rem;margin-bottom:2rem;}
+.form-step{height:4px;border-radius:2px;background:var(--glass-md);flex:1;transition:var(--transition);}
+.form-step.active{background:var(--indigo);}
+.form-step.done{background:var(--emerald);}
+.step-label{font-size:0.8rem;color:var(--text-muted);margin-bottom:2rem;}
+.form-group{margin-bottom:1.5rem;}
+.form-label{display:block;font-size:0.8rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted);margin-bottom:0.6rem;}
+.form-input,.form-textarea,.form-select{width:100%;padding:0.875rem 1rem;background:var(--glass-md);border:1px solid var(--border);border-radius:var(--radius-md);color:var(--text-primary);font-family:var(--font-body);font-size:0.9rem;outline:none;transition:var(--transition);}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:rgba(99,102,241,0.6);box-shadow:0 0 0 3px rgba(99,102,241,0.12);}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--text-muted);}
+.form-textarea{resize:vertical;min-height:120px;}
+.form-select{cursor:pointer;}
+.form-select option{background:var(--bg-deep);}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.type-toggle{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:1.5rem;}
+.type-option{position:relative;}
+.type-option input{position:absolute;opacity:0;}
+.type-option label{display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:1rem;border-radius:var(--radius-md);border:1px solid var(--border);cursor:pointer;transition:var(--transition);font-weight:500;background:var(--glass);}
+.type-option input:checked+label{border-color:var(--indigo);background:rgba(99,102,241,0.12);color:#a5b4fc;}
+.img-upload-area{border:2px dashed var(--border-hi);border-radius:var(--radius-md);padding:2rem;text-align:center;cursor:pointer;transition:var(--transition);background:var(--glass);}
+.img-upload-area:hover{border-color:rgba(99,102,241,0.5);}
+.img-upload-icon{font-size:2.5rem;margin-bottom:0.75rem;}
+.img-upload-text{color:var(--text-secondary);font-size:0.9rem;}
+.img-upload-text span{color:#a5b4fc;}
+.img-preview-box{width:100%;max-height:200px;object-fit:cover;border-radius:var(--radius-sm);margin-top:1rem;}
+.form-actions{display:flex;justify-content:flex-end;gap:0.75rem;margin-top:2rem;}
+/* AUTH */
+.auth-container{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;}
+.auth-card{background:var(--glass);border:1px solid var(--border-hi);border-radius:var(--radius-xl);padding:3rem;width:100%;max-width:440px;backdrop-filter:blur(30px);}
+.auth-logo{font-family:var(--font-display);font-size:1.5rem;font-weight:800;margin-bottom:0.5rem;background:linear-gradient(135deg,var(--indigo),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.auth-title{font-family:var(--font-display);font-size:1.75rem;font-weight:700;margin-bottom:0.5rem;}
+.auth-sub{color:var(--text-secondary);font-size:0.9rem;margin-bottom:2rem;}
+.auth-switch{font-size:0.875rem;color:var(--text-secondary);margin-top:1.5rem;text-align:center;}
+.auth-switch span{color:#a5b4fc;cursor:pointer;}
+.auth-divider{display:flex;align-items:center;gap:1rem;margin:1.5rem 0;}
+.auth-divider-line{flex:1;height:1px;background:var(--border);}
+.auth-divider-text{font-size:0.75rem;color:var(--text-muted);}
+/* DASHBOARD */
+.dashboard-grid{display:grid;grid-template-columns:280px 1fr;gap:2rem;max-width:1200px;margin:0 auto;padding:2rem;}
+.dash-profile-card{background:var(--glass);border:1px solid var(--border);border-radius:var(--radius-xl);padding:2rem;text-align:center;margin-bottom:1.5rem;backdrop-filter:blur(20px);}
+.dash-avatar{width:72px;height:72px;border-radius:50%;margin:0 auto 1rem;background:linear-gradient(135deg,var(--indigo),var(--violet));display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:700;}
+.dash-name{font-family:var(--font-display);font-size:1.1rem;font-weight:600;margin-bottom:0.25rem;}
+.dash-email{font-size:0.8rem;color:var(--text-muted);}
+.dash-stats-mini{display:flex;gap:1rem;justify-content:center;margin-top:1.25rem;}
+.dash-stat-mini{text-align:center;}
+.dash-stat-mini-num{font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:#a5b4fc;}
+.dash-stat-mini-label{font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.05em;}
+.dash-nav{background:var(--glass);border:1px solid var(--border);border-radius:var(--radius-lg);padding:0.75rem;backdrop-filter:blur(20px);}
+.dash-nav-item{display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1rem;border-radius:var(--radius-md);cursor:pointer;transition:var(--transition);font-size:0.875rem;color:var(--text-secondary);border:none;background:none;width:100%;font-family:var(--font-body);text-align:left;}
+.dash-nav-item:hover,.dash-nav-item.active{color:var(--text-primary);background:var(--glass-md);}
+.dash-nav-item.active{color:#a5b4fc;}
+.dash-section-title{font-family:var(--font-display);font-size:1.3rem;font-weight:700;margin-bottom:1.5rem;letter-spacing:-0.02em;}
+.analytics-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem;}
+.analytics-card{background:var(--glass);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;backdrop-filter:blur(20px);position:relative;overflow:hidden;}
+.analytics-card::after{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;background:var(--indigo-glow);filter:blur(20px);}
+.analytics-num{font-family:var(--font-display);font-size:2rem;font-weight:700;color:#a5b4fc;}
+.analytics-label{font-size:0.8rem;color:var(--text-muted);margin-top:0.25rem;text-transform:uppercase;letter-spacing:0.05em;}
+.dash-items-list{display:flex;flex-direction:column;gap:1rem;}
+.dash-item-row{background:var(--glass);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;display:flex;align-items:center;gap:1rem;backdrop-filter:blur(10px);transition:var(--transition);}
+.dash-item-row:hover{border-color:var(--border-hi);}
+.dash-item-emoji{font-size:1.75rem;width:56px;height:56px;background:var(--glass-md);border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;}
+.dash-item-emoji img{width:100%;height:100%;object-fit:cover;}
+.dash-item-info{flex:1;min-width:0;}
+.dash-item-title{font-weight:600;font-size:0.95rem;margin-bottom:0.2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dash-item-meta{font-size:0.8rem;color:var(--text-muted);}
+.dash-item-actions{display:flex;gap:0.5rem;flex-shrink:0;}
+.btn-icon{width:34px;height:34px;border-radius:var(--radius-sm);background:var(--glass-md);border:1px solid var(--border);color:var(--text-secondary);cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center;font-size:0.9rem;}
+.btn-icon:hover{background:var(--glass-hi);color:var(--text-primary);}
+.btn-resolve{padding:0.4rem 0.9rem;border-radius:100px;background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.25);color:#34d399;font-size:0.75rem;cursor:pointer;transition:var(--transition);font-family:var(--font-body);}
+.btn-resolve:hover{background:rgba(16,185,129,0.3);}
+/* CHAT */
+.chat-overlay{position:fixed;bottom:2rem;right:2rem;z-index:150;}
+.chat-bubble-btn{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),var(--violet));border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.4rem;box-shadow:0 8px 30px rgba(99,102,241,0.4);transition:var(--transition);}
+.chat-bubble-btn:hover{transform:scale(1.08);}
+.chat-window{position:absolute;bottom:70px;right:0;width:340px;height:460px;background:var(--bg-surface);border:1px solid var(--border-hi);border-radius:var(--radius-xl);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,0.5);transform:scale(0.9) translateY(20px);transform-origin:bottom right;opacity:0;pointer-events:none;transition:all 0.3s cubic-bezier(0.4,0,0.2,1);}
+.chat-window.open{opacity:1;pointer-events:all;transform:scale(1) translateY(0);}
+.chat-header{padding:1rem 1.25rem;background:var(--glass-md);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:0.75rem;}
+.chat-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),var(--violet));display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700;color:#fff;}
+.chat-cname{font-weight:600;font-size:0.9rem;}
+.chat-status{font-size:0.75rem;color:var(--emerald);}
+.chat-msgs{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:0.75rem;}
+.chat-msg{max-width:80%;padding:0.65rem 0.9rem;border-radius:14px;font-size:0.85rem;line-height:1.5;}
+.chat-msg.them{background:var(--glass-md);align-self:flex-start;border-radius:4px 14px 14px 14px;}
+.chat-msg.me{background:linear-gradient(135deg,var(--indigo),var(--violet));align-self:flex-end;border-radius:14px 4px 14px 14px;}
+.chat-input-area{display:flex;gap:0.5rem;padding:0.75rem;border-top:1px solid var(--border);}
+.chat-input{flex:1;background:var(--glass-md);border:1px solid var(--border);border-radius:100px;padding:0.6rem 1rem;color:var(--text-primary);font-size:0.85rem;font-family:var(--font-body);outline:none;}
+.chat-send{width:36px;height:36px;border-radius:50%;background:var(--indigo);border:none;cursor:pointer;font-size:1rem;color:#fff;transition:var(--transition);}
+/* TOAST */
+.toast-container{position:fixed;top:80px;right:1.5rem;z-index:300;display:flex;flex-direction:column;gap:0.75rem;}
+.toast{background:var(--bg-surface);border:1px solid var(--border-hi);border-radius:var(--radius-lg);padding:1rem 1.25rem;max-width:320px;backdrop-filter:blur(20px);animation:toastIn 0.4s both;display:flex;align-items:flex-start;gap:0.75rem;}
+.toast.success{border-color:rgba(16,185,129,0.3);}
+.toast.info{border-color:rgba(99,102,241,0.3);}
+.toast.error{border-color:rgba(244,63,94,0.3);}
+@keyframes toastIn{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
+.toast-icon{font-size:1.1rem;flex-shrink:0;}
+.toast-title{font-size:0.875rem;font-weight:600;margin-bottom:0.2rem;}
+.toast-desc{font-size:0.8rem;color:var(--text-secondary);}
+/* TOGGLE */
+.toggle-switch{position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0;}
+.toggle-switch input{opacity:0;width:0;height:0;}
+.toggle-slider{position:absolute;cursor:pointer;inset:0;background:var(--glass-md);border:1px solid var(--border-hi);border-radius:100px;transition:var(--transition);}
+.toggle-slider::before{content:'';position:absolute;width:16px;height:16px;border-radius:50%;left:3px;bottom:3px;background:var(--text-muted);transition:var(--transition);}
+.toggle-switch input:checked+.toggle-slider{background:rgba(99,102,241,0.4);border-color:var(--indigo);}
+.toggle-switch input:checked+.toggle-slider::before{transform:translateX(20px);background:var(--indigo);}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border-hi);border-radius:2px;}
+@media(max-width:768px){.nav-links{display:none;}.cards-grid{grid-template-columns:1fr;}.dashboard-grid{grid-template-columns:1fr;}.analytics-cards{grid-template-columns:1fr;}.form-row{grid-template-columns:1fr;}.modal-info-grid{grid-template-columns:1fr;}.chat-window{width:300px;}}
+</style>
+</head>
+<body>
+<div class="bg-orbs"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
+
+<nav>
+  <div class="nav-logo" id="nav-logo">FoundIt ✦</div>
+  <div class="nav-links">
+    <button class="nav-link active" id="nav-home">Home</button>
+    <button class="nav-link" id="nav-lost">Lost Items</button>
+    <button class="nav-link" id="nav-found">Found Items</button>
+    <button class="nav-link" id="nav-dashboard">Dashboard</button>
+  </div>
+  <div id="nav-right" style="display:flex;gap:0.5rem;align-items:center;">
+    <button class="btn-secondary" style="padding:0.5rem 1rem;font-size:0.875rem;" id="nav-login">Login</button>
+    <button class="nav-cta" id="nav-post">+ Post Item</button>
+  </div>
+</nav>
+
+<div class="toast-container" id="toast-container"></div>
+
+<main>
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-badge"><div class="hero-badge-dot"></div>Official Lost &amp; Found — Noida Institute of Engineering &amp; Technology</div>
+    <h1><span class="word w1">Lost</span>&nbsp;<span class="word w2">something?</span><br><span class="word w3 gradient-text">We'll</span>&nbsp;<span class="word w4 gradient-text">find</span>&nbsp;<span class="word w5 gradient-text">it&nbsp;together.</span></h1>
+    <p class="hero-sub">NIET Noida's official campus lost &amp; found platform. Post, search, and reunite — powered by AI matching and real-time messaging.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" id="btn-report-lost">🔴 Report Lost Item</button>
+      <button class="btn-secondary" id="btn-report-found">🟢 Report Found Item</button>
+      <button class="btn-secondary" id="btn-browse">Browse Listings</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="hero-stat-num" id="stat-resolved">0</div><div class="hero-stat-label">Items Resolved</div></div>
+      <div class="hero-stat"><div class="hero-stat-num" id="stat-total">0</div><div class="hero-stat-label">Total Posted</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">NIET</div><div class="hero-stat-label">Noida Campus</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">&lt;2h</div><div class="hero-stat-label">Avg. Recovery</div></div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="section-header"><div class="section-title">Recent Listings <span>— live feed</span></div><button class="section-link" id="home-view-all">View all →</button></div>
+    <div id="home-cards"><div class="loading"><div class="spinner"></div><div>Loading items...</div></div></div>
+  </div>
+  <div class="section">
+    <div class="section-header"><div class="section-title">How it <span>works</span></div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;">
+      <div style="background:var(--glass);border:1px solid var(--border);border-radius:var(--radius-xl);padding:2rem;backdrop-filter:blur(20px);"><div style="font-size:2rem;margin-bottom:1rem;">📝</div><div style="font-family:var(--font-display);font-weight:700;margin-bottom:0.5rem;">Post Your Item</div><div style="font-size:0.875rem;color:var(--text-secondary);line-height:1.6;">Describe lost or found item with photos, location, and details in seconds.</div></div>
+      <div style="background:var(--glass);border:1px solid var(--border);border-radius:var(--radius-xl);padding:2rem;backdrop-filter:blur(20px);"><div style="font-size:2rem;margin-bottom:1rem;">🤖</div><div style="font-family:var(--font-display);font-weight:700;margin-bottom:0.5rem;">AI Matches Items</div><div style="font-size:0.875rem;color:var(--text-secondary);line-height:1.6;">Our AI scans all listings and alerts you when a potential match is found.</div></div>
+      <div style="background:var(--glass);border:1px solid var(--border);border-radius:var(--radius-xl);padding:2rem;backdrop-filter:blur(20px);"><div style="font-size:2rem;margin-bottom:1rem;">💬</div><div style="font-family:var(--font-display);font-weight:700;margin-bottom:0.5rem;">Chat Securely</div><div style="font-size:0.875rem;color:var(--text-secondary);line-height:1.6;">Connect with the finder through encrypted in-app messaging.</div></div>
+      <div style="background:var(--glass);border:1px solid var(--border);border-radius:var(--radius-xl);padding:2rem;backdrop-filter:blur(20px);"><div style="font-size:2rem;margin-bottom:1rem;">🎉</div><div style="font-family:var(--font-display);font-weight:700;margin-bottom:0.5rem;">Reunite!</div><div style="font-size:0.875rem;color:var(--text-secondary);line-height:1.6;">Meet safely and mark the item as resolved.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- LOST -->
+<div class="page" id="page-lost">
+  <div class="page-header"><div class="page-header-title">🔴 Lost Items</div><div class="page-header-sub">Help a NIET Noida student find what they've lost.</div></div>
+  <div class="section" style="padding-top:0;">
+    <div class="filters-bar">
+      <input class="filter-input" type="text" placeholder="🔍  Search items..." id="lost-search"/>
+      <select class="filter-select" id="lost-cat"><option value="">All Categories</option><option>Electronics</option><option>ID/Cards</option><option>Bags</option><option>Clothing</option><option>Books</option><option>Keys</option><option>Jewelry</option><option>Other</option></select>
+      <button class="filter-btn active" id="fb-all-lost">All</button>
+      <button class="filter-btn" id="fb-pending-lost">Pending</button>
+      <button class="filter-btn" id="fb-resolved-lost">Resolved</button>
+    </div>
+    <div id="lost-cards"><div class="loading"><div class="spinner"></div><div>Loading...</div></div></div>
+  </div>
+</div>
+
+<!-- FOUND -->
+<div class="page" id="page-found">
+  <div class="page-header"><div class="page-header-title">🟢 Found Items</div><div class="page-header-sub">Browse items found around NIET Noida campus.</div></div>
+  <div class="section" style="padding-top:0;">
+    <div class="filters-bar">
+      <input class="filter-input" type="text" placeholder="🔍  Search items..." id="found-search"/>
+      <select class="filter-select" id="found-cat"><option value="">All Categories</option><option>Electronics</option><option>ID/Cards</option><option>Bags</option><option>Clothing</option><option>Books</option><option>Keys</option><option>Jewelry</option><option>Other</option></select>
+    </div>
+    <div id="found-cards"><div class="loading"><div class="spinner"></div><div>Loading...</div></div></div>
+  </div>
+</div>
+
+<!-- POST -->
+<div class="page" id="page-post">
+  <div class="form-container" style="padding-top:5.5rem;">
+    <div class="form-page-title">Post an Item</div>
+    <div class="form-page-sub">Fill in the details. The more specific, the better the match.</div>
+    <div class="form-card">
+      <div class="form-step-indicator"><div class="form-step active" id="step-bar-1"></div><div class="form-step" id="step-bar-2"></div><div class="form-step" id="step-bar-3"></div></div>
+      <div class="step-label" id="step-label">Step 1 of 3 — Item Type &amp; Basic Info</div>
+      <div id="form-step-1">
+        <div style="margin-bottom:1.5rem;"><div class="form-label">Item Type</div><div class="type-toggle"><div class="type-option"><input type="radio" name="item-type" id="type-lost" value="lost" checked><label for="type-lost">🔴 &nbsp;I Lost Something</label></div><div class="type-option"><input type="radio" name="item-type" id="type-found-radio" value="found"><label for="type-found-radio">🟢 &nbsp;I Found Something</label></div></div></div>
+        <div class="form-group"><label class="form-label">Item Title *</label><input class="form-input" id="f-title" type="text" placeholder="e.g. Black Sony Headphones"/></div>
+        <div class="form-group"><label class="form-label">Category *</label><select class="form-select" id="f-category"><option value="">Select category</option><option>Electronics</option><option>ID/Cards</option><option>Bags</option><option>Clothing</option><option>Books</option><option>Keys</option><option>Jewelry</option><option>Other</option></select></div>
+        <div class="form-group"><label class="form-label">Description *</label><textarea class="form-textarea" id="f-desc" placeholder="Describe the item — color, brand, size, unique marks..."></textarea></div>
+        <div class="form-actions"><button class="btn-primary" id="step1-next">Continue →</button></div>
+      </div>
+      <div id="form-step-2" style="display:none;">
+        <div class="form-group"><label class="form-label">Photo (optional)</label><div class="img-upload-area" id="upload-area"><div class="img-upload-icon">📸</div><div class="img-upload-text">Click to <span>browse</span> or drag &amp; drop</div><div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem;">PNG, JPG up to 10MB</div><img id="img-preview" class="img-preview-box" style="display:none;" alt="preview"/></div><input type="file" id="f-image" accept="image/*" style="display:none;"/></div>
+        <div class="form-row"><div class="form-group"><label class="form-label">Location *</label><input class="form-input" id="f-location" type="text" placeholder="e.g. NIET Main Library, 2nd Floor"/></div><div class="form-group"><label class="form-label">Date *</label><input class="form-input" id="f-date" type="date"/></div></div>
+        <div class="form-actions"><button class="btn-secondary" id="step2-back">← Back</button><button class="btn-primary" id="step2-next">Continue →</button></div>
+      </div>
+      <div id="form-step-3" style="display:none;">
+        <div class="form-group"><label class="form-label">Your Name *</label><input class="form-input" id="f-name" type="text" placeholder="Full name"/></div>
+        <div class="form-row"><div class="form-group"><label class="form-label">Email *</label><input class="form-input" id="f-email" type="email" placeholder="ahtisham@niet.co.in"/></div><div class="form-group"><label class="form-label">Phone</label><input class="form-input" id="f-phone" type="tel" placeholder="+91 XXXXX XXXXX"/></div></div>
+        <div class="form-group"><label class="form-label">Additional Notes</label><textarea class="form-textarea" id="f-notes" placeholder="Any reward? Special instructions?" style="min-height:80px;"></textarea></div>
+        <div style="background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.2);border-radius:var(--radius-md);padding:1rem;margin-bottom:1.5rem;font-size:0.85rem;color:var(--text-secondary);">🤖 <strong style="color:var(--text-primary);">AI Matching Active</strong> — System will scan listings and notify you of potential matches.</div>
+        <div class="form-actions"><button class="btn-secondary" id="step3-back">← Back</button><button class="btn-primary" id="step3-submit">🚀 Post Item</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AUTH -->
+<div class="page" id="page-auth">
+  <div class="auth-container">
+    <div class="auth-card">
+      <div class="auth-logo">FoundIt ✦</div>
+      <div class="auth-title" id="auth-title">Welcome back</div>
+      <div class="auth-sub" id="auth-sub">Sign in to manage your NIET listings.</div>
+      <div id="auth-form-login">
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="login-email" type="email" placeholder="ahtisham@niet.co.in"/></div>
+        <div class="form-group"><label class="form-label">Password</label><input class="form-input" id="login-pass" type="password" placeholder="••••••••"/></div>
+        <button class="btn-primary" style="width:100%;margin-top:0.5rem;" id="btn-login">Sign In</button>
+        <div class="auth-switch">New to FoundIt? <span id="auth-toggle-signup">Create account</span></div>
+      </div>
+      <div id="auth-form-signup" style="display:none;">
+        <div class="form-row"><div class="form-group"><label class="form-label">Full Name</label><input class="form-input" id="reg-name" type="text" placeholder="Ahtisham Ali"/></div><div class="form-group"><label class="form-label">College</label><input class="form-input" id="reg-college" type="text" placeholder="NIET Noida" value="NIET Noida"/></div></div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="reg-email" type="email" placeholder="ahtisham@niet.co.in"/></div>
+        <div class="form-group"><label class="form-label">Phone</label><input class="form-input" id="reg-phone" type="tel" placeholder="+91 XXXXX XXXXX"/></div>
+        <div class="form-group"><label class="form-label">Password</label><input class="form-input" id="reg-pass" type="password" placeholder="Min 6 characters"/></div>
+        <button class="btn-primary" style="width:100%;margin-top:0.5rem;" id="btn-signup">Create Account</button>
+        <div class="auth-switch">Already have an account? <span id="auth-toggle-login">Sign in</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="page" id="page-dashboard">
+  <div style="padding-top:64px;">
+    <div class="dashboard-grid">
+      <div>
+        <div class="dash-profile-card">
+          <div class="dash-avatar" id="dash-avatar-initials">AA</div>
+          <div class="dash-name" id="dash-user-name">Ahtisham Ali</div>
+          <div class="dash-email" id="dash-user-email">ahtisham@niet.co.in</div>
+          <div class="dash-stats-mini">
+            <div class="dash-stat-mini"><div class="dash-stat-mini-num" id="dash-total">0</div><div class="dash-stat-mini-label">Posted</div></div>
+            <div class="dash-stat-mini"><div class="dash-stat-mini-num" id="dash-resolved-count">0</div><div class="dash-stat-mini-label">Resolved</div></div>
+            <div class="dash-stat-mini"><div class="dash-stat-mini-num" id="dash-pending-count">0</div><div class="dash-stat-mini-label">Pending</div></div>
+          </div>
+        </div>
+        <div class="dash-nav">
+          <button class="dash-nav-item active" id="dnav-overview">📊 &nbsp;Overview</button>
+          <button class="dash-nav-item" id="dnav-myitems">📋 &nbsp;My Items</button>
+          <button class="dash-nav-item" id="dnav-messages">💬 &nbsp;Messages</button>
+          <button class="dash-nav-item" id="dnav-settings">⚙️ &nbsp;Settings</button>
+          <button class="dash-nav-item" id="dnav-logout" style="margin-top:0.5rem;border-top:1px solid var(--border);padding-top:1rem;color:var(--rose);">🚪 &nbsp;Logout</button>
+          <button class="dash-nav-item" id="dnav-back">← Back to Home</button>
+        </div>
+      </div>
+      <div>
+        <!-- OVERVIEW -->
+        <div id="dash-tab-overview">
+          <div class="analytics-cards">
+            <div class="analytics-card"><div class="analytics-num" id="ov-total">0</div><div class="analytics-label">Items Posted</div></div>
+            <div class="analytics-card" style="--indigo-glow:rgba(16,185,129,0.3)"><div class="analytics-num" style="color:#34d399;" id="ov-resolved">0</div><div class="analytics-label">Resolved</div></div>
+            <div class="analytics-card" style="--indigo-glow:rgba(245,158,11,0.3)"><div class="analytics-num" style="color:#fbbf24;" id="ov-pending">0</div><div class="analytics-label">Pending</div></div>
+          </div>
+          <div class="dash-section-title">My Recent Items</div>
+          <div class="dash-items-list" id="dash-recent"></div>
+        </div>
+        <!-- MY ITEMS -->
+        <div id="dash-tab-myitems" style="display:none;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+            <div class="dash-section-title" style="margin-bottom:0;">My Posted Items</div>
+            <button class="btn-primary" style="padding:0.6rem 1.25rem;font-size:0.85rem;" id="dash-post-new">+ Post New Item</button>
+          </div>
+          <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap;">
+            <button class="filter-btn active" id="mi-all">All</button>
+            <button class="filter-btn" id="mi-lost">Lost</button>
+            <button class="filter-btn" id="mi-found">Found</button>
+            <button class="filter-btn" id="mi-resolved">Resolved</button>
+          </div>
+          <div class="dash-items-list" id="my-items-list"></div>
+        </div>
+        <!-- MESSAGES -->
+        <div id="dash-tab-messages" style="display:none;">
+          <div class="dash-section-title">Messages</div>
+          <div style="background:var(--glass);border:1px solid var(--border);border-radius:var(--radius-xl);padding:3rem;text-align:center;backdrop-filter:blur(20px);">
+            <div style="font-size:3rem;margin-bottom:1rem;">💬</div>
+            <div style="font-family:var(--font-display);font-size:1.1rem;font-weight:600;margin-bottom:0.5rem;">Chat Feature</div>
+            <div style="color:var(--text-secondary);font-size:0.9rem;">Click "Message Owner" on any item to start a conversation.</div>
+          </div>
+        </div>
+        <!-- SETTINGS -->
+        <div id="dash-tab-settings" style="display:none;">
+          <div class="dash-section-title">Account Settings</div>
+          <div style="display:flex;flex-direction:column;gap:1.5rem;">
+            <div style="background:var(--glass);border:1px solid var(--border);border-radius:var(--radius-xl);padding:2rem;backdrop-filter:blur(20px);">
+              <div style="font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:1.5rem;color:#a5b4fc;">👤 Profile</div>
+              <div class="form-row"><div class="form-group"><label class="form-label">Full Name</label><input class="form-input" id="set-name" type="text"/></div><div class="form-group"><label class="form-label">Email</label><input class="form-input" id="set-email" type="email" readonly style="opacity:0.6;"/></div></div>
+              <div class="form-row"><div class="form-group"><label class="form-label">Phone</label><input class="form-input" id="set-phone" type="tel"/></div><div class="form-group"><label class="form-label">College</label><input class="form-input" id="set-college" type="text"/></div></div>
+              <button class="btn-primary" style="padding:0.7rem 1.75rem;font-size:0.875rem;" id="btn-save-settings">Save Changes</button>
+            </div>
+            <div style="background:rgba(244,63,94,0.05);border:1px solid rgba(244,63,94,0.2);border-radius:var(--radius-xl);padding:2rem;">
+              <div style="font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:0.5rem;color:var(--rose);">🚪 Logout</div>
+              <div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:1rem;">Sign out of your NIET FoundIt account.</div>
+              <button id="btn-logout" style="background:rgba(244,63,94,0.15);border:1px solid rgba(244,63,94,0.3);color:#fb7185;padding:0.6rem 1.25rem;border-radius:var(--radius-md);cursor:pointer;font-family:var(--font-body);font-size:0.875rem;">Logout</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="item-modal">
+  <div class="modal">
+    <button class="modal-close" id="modal-close">✕</button>
+    <div class="modal-img" id="modal-img-wrap"><span id="modal-emoji">📦</span></div>
+    <div class="modal-body">
+      <span class="item-card-badge" id="modal-badge" style="position:static;display:inline-block;margin-bottom:0.5rem;">Lost</span>
+      <div class="modal-title" id="modal-title"></div>
+      <div class="modal-desc" id="modal-desc"></div>
+      <div class="modal-info-grid">
+        <div><div class="modal-info-label">📍 Location</div><div class="modal-info-value" id="modal-loc"></div></div>
+        <div><div class="modal-info-label">📅 Date</div><div class="modal-info-value" id="modal-date"></div></div>
+        <div><div class="modal-info-label">🏷️ Category</div><div class="modal-info-value" id="modal-cat"></div></div>
+        <div><div class="modal-info-label">👤 Posted by</div><div class="modal-info-value" id="modal-contact"></div></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-contact" id="modal-chat-btn">💬 &nbsp;Message Owner</button>
+        <button class="btn-claim" id="modal-claim-btn">✅ &nbsp;This is Mine!</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHAT -->
+<div class="chat-overlay">
+  <div class="chat-window" id="chat-window">
+    <div class="chat-header">
+      <div class="chat-av" id="chat-av">?</div>
+      <div><div class="chat-cname" id="chat-cname">Select a contact</div><div class="chat-status">● Online</div></div>
+      <button id="chat-close-btn" style="margin-left:auto;background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:1.1rem;">✕</button>
+    </div>
+    <div class="chat-msgs" id="chat-msgs"></div>
+    <div class="chat-input-area">
+      <input class="chat-input" id="chat-input" type="text" placeholder="Type a message..."/>
+      <button class="chat-send" id="chat-send-btn">➤</button>
+    </div>
+  </div>
+  <button class="chat-bubble-btn" id="chat-toggle-btn">💬</button>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+//  CONFIG
+// ══════════════════════════════════════════════════════════════
+const API = 'http://localhost:5000/api';
+const UPLOADS = 'http://localhost:5000/uploads';
+
+// Category → emoji map
+const EMOJI = {Electronics:'📱',Bags:'🎒','ID/Cards':'🪪',Keys:'🔑',Jewelry:'💍',Books:'📚',Clothing:'👕',Other:'📦'};
+
+// ══════════════════════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════════════════════
+let currentUser = JSON.parse(localStorage.getItem('foundit_user') || 'null');
+let currentToken = localStorage.getItem('foundit_token') || null;
+let chatOpen = false;
+let formStep = 1;
+
+// ══════════════════════════════════════════════════════════════
+//  HELPERS
+// ══════════════════════════════════════════════════════════════
+const $ = id => document.getElementById(id);
+function fmt(d){ return new Date(d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}); }
+function initials(name){ return name ? name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2) : '??'; }
+
+function toast(type, title, desc) {
+  const icons = {success:'✅', info:'💡', error:'❌'};
+  const t = document.createElement('div');
+  t.className = 'toast ' + type;
+  t.innerHTML = '<div class="toast-icon">'+(icons[type]||'ℹ️')+'</div><div><div class="toast-title">'+title+'</div><div class="toast-desc">'+(desc||'')+'</div></div>';
+  $('toast-container').appendChild(t);
+  setTimeout(() => t.remove(), 4500);
+}
+
+async function apiFetch(url, options = {}) {
+  const headers = { 'Content-Type': 'application/json', ...options.headers };
+  if (currentToken) headers['Authorization'] = 'Bearer ' + currentToken;
+  const res = await fetch(API + url, { ...options, headers });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || 'Request failed');
+  return data;
+}
+
+async function apiFormData(url, formData, method = 'POST') {
+  const headers = {};
+  if (currentToken) headers['Authorization'] = 'Bearer ' + currentToken;
+  const res = await fetch(API + url, { method, headers, body: formData });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || 'Request failed');
+  return data;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  NAV & AUTH STATE
+// ══════════════════════════════════════════════════════════════
+function updateNavForUser() {
+  const navRight = $('nav-right');
+  if (currentUser) {
+    navRight.innerHTML = `
+      <div class="nav-user">
+        <span class="nav-user-name">Hi, ${currentUser.name.split(' ')[0]}!</span>
+        <div class="nav-avatar" id="nav-avatar-btn">${initials(currentUser.name)}</div>
+      </div>
+      <button class="nav-cta" id="nav-post">+ Post Item</button>`;
+    $('nav-avatar-btn').addEventListener('click', () => go('dashboard'));
+    $('nav-post').addEventListener('click', () => go('post'));
+  } else {
+    navRight.innerHTML = `
+      <button class="btn-secondary" style="padding:0.5rem 1rem;font-size:0.875rem;" id="nav-login">Login</button>
+      <button class="nav-cta" id="nav-post">+ Post Item</button>`;
+    $('nav-login').addEventListener('click', () => go('auth'));
+    $('nav-post').addEventListener('click', () => {
+      if (!currentUser) { toast('info','Login Required','Please login to post an item.'); go('auth'); return; }
+      go('post');
+    });
+  }
+}
+
+function saveUser(token, user) {
+  currentToken = token;
+  currentUser = user;
+  localStorage.setItem('foundit_token', token);
+  localStorage.setItem('foundit_user', JSON.stringify(user));
+  updateNavForUser();
+}
+
+function logout() {
+  currentToken = null;
+  currentUser = null;
+  localStorage.removeItem('foundit_token');
+  localStorage.removeItem('foundit_user');
+  updateNavForUser();
+  go('home');
+  toast('info', '👋 Logged out', 'See you soon!');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  NAVIGATION
+// ══════════════════════════════════════════════════════════════
+function go(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  $('page-' + page).classList.add('active');
+  const map = {home:'nav-home',lost:'nav-lost',found:'nav-found',dashboard:'nav-dashboard'};
+  if (map[page]) { const el=$(map[page]); if(el) el.classList.add('active'); }
+  window.scrollTo(0, 0);
+  if (page === 'home') { loadHomeItems(); loadStats(); }
+  if (page === 'lost') loadItems('lost');
+  if (page === 'found') loadItems('found');
+  if (page === 'dashboard') {
+    if (!currentUser) { toast('info','Login Required','Please login to view dashboard.'); go('auth'); return; }
+    loadDashboard();
+    updateDashProfile();
+  }
+  if (page === 'post' && !currentUser) {
+    toast('info','Login Required','Please login to post an item.');
+    go('auth'); return;
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+//  ITEM CARD HTML
+// ══════════════════════════════════════════════════════════════
+function makeCard(item) {
+  const bc = item.type==='lost' ? 'badge-lost' : item.status==='resolved' ? 'badge-resolved' : 'badge-found';
+  const bl = item.status==='resolved' ? 'Resolved' : item.type==='lost' ? 'Lost' : 'Found';
+  const imgContent = item.image
+    ? '<img src="'+UPLOADS+'/'+item.image+'" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML=\''+( EMOJI[item.category]||'📦')+'\'" />'
+    : (EMOJI[item.category] || '📦');
+  return `<div class="item-card" data-id="${item._id}">
+    <div class="item-card-img">${imgContent}<span class="item-card-badge ${bc}">${bl}</span></div>
+    <div class="item-card-body">
+      <div class="item-card-cat">${item.category}</div>
+      <div class="item-card-title">${item.title}</div>
+      <div class="item-card-desc">${item.description}</div>
+      <div class="item-card-meta">
+        <div class="item-card-loc">📍 ${item.location.split(',')[0]}</div>
+        <div class="item-card-date">${fmt(item.date)}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function bindCardClicks(containerId, itemsArr) {
+  const el = $(containerId);
+  if (!el) return;
+  el.querySelectorAll('.item-card').forEach(card => {
+    card.addEventListener('click', function() {
+      const item = itemsArr.find(i => i._id === this.dataset.id);
+      if (item) openModal(item);
+    });
+  });
+}
+
+// ══════════════════════════════════════════════════════════════
+//  LOAD ITEMS FROM API
+// ══════════════════════════════════════════════════════════════
+let homeItems = [], lostItems = [], foundItems = [];
+
+async function loadStats() {
+  try {
+    const { data } = await apiFetch('/stats');
+    $('stat-resolved').textContent = data.resolved;
+    $('stat-total').textContent = data.total;
+  } catch(e) {}
+}
+
+async function loadHomeItems() {
+  const el = $('home-cards');
+  el.innerHTML = '<div class="loading"><div class="spinner"></div><div>Loading items...</div></div>';
+  try {
+    const { data } = await apiFetch('/items?limit=6');
+    homeItems = data;
+    if (!data.length) { el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><div>No items yet. Be the first to post!</div></div>'; return; }
+    el.innerHTML = '<div class="cards-grid">' + data.map(makeCard).join('') + '</div>';
+    bindCardClicks('home-cards', homeItems);
+  } catch(e) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚠️</div><div>Could not load items. Is the server running?</div></div>';
+  }
+}
+
+async function loadItems(type) {
+  const el = $(type + '-cards');
+  el.innerHTML = '<div class="loading"><div class="spinner"></div><div>Loading...</div></div>';
+  try {
+    const { data } = await apiFetch('/items?type=' + type);
+    if (type === 'lost') lostItems = data;
+    else foundItems = data;
+    renderItemList(type, data);
+  } catch(e) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">⚠️</div><div>Could not load. Is backend running?</div></div>';
+  }
+}
+
+function renderItemList(type, data) {
+  const el = $(type + '-cards');
+  if (!data.length) { el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><div>No '+type+' items found.</div></div>'; return; }
+  el.innerHTML = '<div class="cards-grid">' + data.map(makeCard).join('') + '</div>';
+  if (type === 'lost') bindCardClicks('lost-cards', lostItems);
+  else bindCardClicks('found-cards', foundItems);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  MODAL
+// ══════════════════════════════════════════════════════════════
+function openModal(item) {
+  const wrap = $('modal-img-wrap');
+  if (item.image) {
+    wrap.innerHTML = '<img src="'+UPLOADS+'/'+item.image+'" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML=\''+(EMOJI[item.category]||'📦')+'\'"/>';
+  } else {
+    wrap.innerHTML = '<span style="font-size:5rem;">'+(EMOJI[item.category]||'📦')+'</span>';
+  }
+  $('modal-title').textContent = item.title;
+  $('modal-desc').textContent = item.description;
+  $('modal-loc').textContent = item.location;
+  $('modal-date').textContent = fmt(item.date);
+  $('modal-cat').textContent = item.category;
+  $('modal-contact').textContent = item.contact?.name || item.userName || 'Anonymous';
+  const badge = $('modal-badge');
+  badge.textContent = item.type === 'lost' ? 'Lost' : 'Found';
+  badge.className = 'item-card-badge '+(item.type==='lost'?'badge-lost':'badge-found');
+  $('item-modal').classList.add('open');
+}
+function closeModal() { $('item-modal').classList.remove('open'); }
+
+// ══════════════════════════════════════════════════════════════
+//  DASHBOARD
+// ══════════════════════════════════════════════════════════════
+let myItems = [];
+
+function updateDashProfile() {
+  if (!currentUser) return;
+  $('dash-avatar-initials').textContent = initials(currentUser.name);
+  $('dash-user-name').textContent = currentUser.name;
+  $('dash-user-email').textContent = currentUser.email;
+  $('set-name').value = currentUser.name;
+  $('set-email').value = currentUser.email;
+  $('set-phone').value = currentUser.phone || '';
+  $('set-college').value = currentUser.college || 'NIET Noida';
+}
+
+async function loadDashboard() {
+  try {
+    const { data } = await apiFetch('/items/mine');
+    myItems = data;
+    const total = data.length;
+    const resolved = data.filter(i => i.status === 'resolved').length;
+    const pending = total - resolved;
+
+    // Update profile stats
+    $('dash-total').textContent = total;
+    $('dash-resolved-count').textContent = resolved;
+    $('dash-pending-count').textContent = pending;
+
+    // Update analytics
+    $('ov-total').textContent = total;
+    $('ov-resolved').textContent = resolved;
+    $('ov-pending').textContent = pending;
+
+    // Render recent items in overview
+    renderDashItems('dash-recent', data.slice(0, 5));
+  } catch(e) {
+    toast('error', 'Error', 'Could not load your items.');
+  }
+}
+
+function renderDashItems(containerId, data) {
+  const el = $(containerId);
+  if (!el) return;
+  if (!data.length) {
+    el.innerHTML = '<div class="empty-state"><div class="empty-state-icon">📭</div><div>No items yet. <span style="color:#a5b4fc;cursor:pointer;" id="post-first">Post your first item →</span></div></div>';
+    setTimeout(() => { const pf=$('post-first'); if(pf) pf.addEventListener('click',()=>go('post')); }, 100);
+    return;
+  }
+  el.innerHTML = data.map(item => {
+    const imgContent = item.image
+      ? '<img src="'+UPLOADS+'/'+item.image+'" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-md);" onerror="this.parentElement.innerHTML=\''+(EMOJI[item.category]||'📦')+'\'"/>'
+      : (EMOJI[item.category] || '📦');
+    const bc = item.type==='lost'?'badge-lost':item.status==='resolved'?'badge-resolved':'badge-found';
+    const bl = item.status==='resolved'?'✅ Resolved':item.type==='lost'?'🔴 Lost':'🟢 Found';
+    return `<div class="dash-item-row">
+      <div class="dash-item-emoji">${imgContent}</div>
+      <div class="dash-item-info">
+        <div class="dash-item-title">${item.title}</div>
+        <div class="dash-item-meta">${item.category} · ${item.location.split(',')[0]} · ${fmt(item.date)}</div>
+      </div>
+      <span class="item-card-badge ${bc}" style="position:static;white-space:nowrap;">${bl}</span>
+      <div class="dash-item-actions">
+        ${item.status !== 'resolved' ? '<button class="btn-resolve" data-id="'+item._id+'">Resolve</button>' : ''}
+        <button class="btn-icon view-btn" data-id="${item._id}">👁️</button>
+        <button class="btn-icon del-btn" data-id="${item._id}">🗑️</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Bind action buttons
+  el.querySelectorAll('.btn-resolve').forEach(btn => {
+    btn.addEventListener('click', async function() {
+      try {
+        await apiFetch('/items/'+this.dataset.id+'/resolve', {method:'PUT'});
+        toast('success','✅ Resolved!','Item marked as resolved.');
+        loadDashboard();
+        renderMyItems('all');
+      } catch(e) { toast('error','Error',e.message); }
+    });
+  });
+  el.querySelectorAll('.view-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const item = myItems.find(i => i._id === this.dataset.id);
+      if (item) openModal(item);
+    });
+  });
+  el.querySelectorAll('.del-btn').forEach(btn => {
+    btn.addEventListener('click', async function() {
+      if (!confirm('Delete this item? This cannot be undone.')) return;
+      try {
+        await apiFetch('/items/'+this.dataset.id, {method:'DELETE'});
+        toast('info','🗑️ Deleted','Item removed.');
+        loadDashboard();
+        renderMyItems('all');
+      } catch(e) { toast('error','Error',e.message); }
+    });
+  });
+}
+
+function renderMyItems(filter) {
+  let data = myItems;
+  if (filter === 'lost') data = myItems.filter(i => i.type==='lost' && i.status!=='resolved');
+  if (filter === 'found') data = myItems.filter(i => i.type==='found' && i.status!=='resolved');
+  if (filter === 'resolved') data = myItems.filter(i => i.status==='resolved');
+  renderDashItems('my-items-list', data);
+}
+
+function switchDashTab(tab) {
+  ['overview','myitems','messages','settings'].forEach(t => {
+    const el = $('dash-tab-'+t); if(el) el.style.display='none';
+  });
+  document.querySelectorAll('.dash-nav-item').forEach(b => b.classList.remove('active'));
+  const el = $('dash-tab-'+tab); if(el) el.style.display='block';
+  const nb = $('dnav-'+tab); if(nb) nb.classList.add('active');
+  if (tab === 'myitems') renderMyItems('all');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  FORM — POST ITEM
+// ══════════════════════════════════════════════════════════════
+function goStep(s) {
+  [1,2,3].forEach(i => {
+    $('form-step-'+i).style.display = i===s ? 'block' : 'none';
+    $('step-bar-'+i).className = 'form-step' + (i<s?' done':i===s?' active':'');
+  });
+  $('step-label').textContent = ['','Step 1 of 3 — Item Type & Basic Info','Step 2 of 3 — Photo & Location','Step 3 of 3 — Contact Details'][s];
+  formStep = s;
+}
+
+async function submitItem() {
+  const title = $('f-title').value.trim();
+  const desc = $('f-desc').value.trim();
+  const cat = $('f-category').value;
+  const loc = $('f-location').value.trim();
+  const date = $('f-date').value;
+  const type = document.querySelector('input[name="item-type"]:checked').value;
+
+  if (!title || !desc || !cat || !loc || !date) {
+    toast('info','⚠️ Missing Fields','Please fill all required fields.');
+    return;
+  }
+
+  const btn = $('step3-submit');
+  btn.disabled = true;
+  btn.textContent = '⏳ Posting...';
+
+  try {
+    const fd = new FormData();
+    fd.append('title', title);
+    fd.append('description', desc);
+    fd.append('category', cat);
+    fd.append('location', loc);
+    fd.append('date', date);
+    fd.append('type', type);
+    fd.append('contactName', $('f-name').value || currentUser.name);
+    fd.append('contactEmail', $('f-email').value || currentUser.email);
+    fd.append('contactPhone', $('f-phone').value || '');
+
+    const imgFile = $('f-image').files[0];
+    if (imgFile) fd.append('image', imgFile);
+
+    await apiFormData('/items', fd);
+    toast('success','🎉 Item Posted!','Your item is now live on NIET FoundIt.');
+
+    // Reset form
+    ['f-title','f-desc','f-location','f-name','f-email','f-phone','f-notes'].forEach(id => { const el=$(id); if(el) el.value=''; });
+    $('f-category').value = '';
+    const prev = $('img-preview'); if(prev){ prev.src=''; prev.style.display='none'; }
+    goStep(1);
+
+    go('dashboard');
+  } catch(e) {
+    toast('error','Error',e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '🚀 Post Item';
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+//  CHAT
+// ══════════════════════════════════════════════════════════════
+function toggleChat() { chatOpen=!chatOpen; $('chat-window').classList.toggle('open',chatOpen); }
+function openChatWith(name) {
+  $('chat-av').textContent = initials(name);
+  $('chat-cname').textContent = name;
+  $('chat-msgs').innerHTML = '<div class="chat-msg them">Hi! I saw your post on NIET FoundIt.</div>';
+  chatOpen = true; $('chat-window').classList.add('open');
+}
+function sendMsg() {
+  const inp = $('chat-input'); const v = inp.value.trim(); if(!v) return;
+  const m = document.createElement('div'); m.className='chat-msg me'; m.textContent=v;
+  const msgs = $('chat-msgs'); msgs.appendChild(m); inp.value=''; msgs.scrollTop=msgs.scrollHeight;
+  setTimeout(()=>{ const r=document.createElement('div');r.className='chat-msg them';r.textContent='Got it! Let me check and get back to you.';msgs.appendChild(r);msgs.scrollTop=msgs.scrollHeight; },1200);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  INIT — DOM READY
+// ══════════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', function() {
+
+  // Init nav based on saved login
+  updateNavForUser();
+
+  // NAV
+  $('nav-logo').addEventListener('click', () => go('home'));
+  $('nav-home').addEventListener('click', () => go('home'));
+  $('nav-lost').addEventListener('click', () => go('lost'));
+  $('nav-found').addEventListener('click', () => go('found'));
+  $('nav-dashboard').addEventListener('click', () => go('dashboard'));
+
+  // HOME BUTTONS
+  $('btn-report-lost').addEventListener('click', () => { if(!currentUser){go('auth');return;} go('post'); });
+  $('btn-report-found').addEventListener('click', () => { if(!currentUser){go('auth');return;} go('post'); });
+  $('btn-browse').addEventListener('click', () => go('lost'));
+  $('home-view-all').addEventListener('click', () => go('lost'));
+
+  // LOST FILTERS
+  let lostFilter = 'all';
+  $('lost-search').addEventListener('input', async function() {
+    const q = this.value.trim();
+    try {
+      const url = '/items?type=lost' + (q ? '&search='+encodeURIComponent(q) : '');
+      const { data } = await apiFetch(url);
+      lostItems = data; renderItemList('lost', data);
+    } catch(e){}
+  });
+  $('lost-cat').addEventListener('change', async function() {
+    try {
+      const url = '/items?type=lost' + (this.value ? '&category='+encodeURIComponent(this.value) : '');
+      const { data } = await apiFetch(url);
+      lostItems = data; renderItemList('lost', data);
+    } catch(e){}
+  });
+  function setLostActive(btn) {
+    ['fb-all-lost','fb-pending-lost','fb-resolved-lost'].forEach(id=>$(id).classList.remove('active'));
+    btn.classList.add('active');
+  }
+  $('fb-all-lost').addEventListener('click', async function() {
+    const {data} = await apiFetch('/items?type=lost'); lostItems=data; renderItemList('lost',data); setLostActive(this);
+  });
+  $('fb-pending-lost').addEventListener('click', async function() {
+    const {data} = await apiFetch('/items?type=lost&status=pending'); lostItems=data; renderItemList('lost',data); setLostActive(this);
+  });
+  $('fb-resolved-lost').addEventListener('click', async function() {
+    const {data} = await apiFetch('/items?type=lost&status=resolved'); lostItems=data; renderItemList('lost',data); setLostActive(this);
+  });
+
+  // FOUND FILTERS
+  $('found-search').addEventListener('input', async function() {
+    const q = this.value.trim();
+    try {
+      const url = '/items?type=found' + (q ? '&search='+encodeURIComponent(q) : '');
+      const { data } = await apiFetch(url);
+      foundItems = data; renderItemList('found', data);
+    } catch(e){}
+  });
+  $('found-cat').addEventListener('change', async function() {
+    try {
+      const url = '/items?type=found' + (this.value ? '&category='+encodeURIComponent(this.value) : '');
+      const { data } = await apiFetch(url);
+      foundItems = data; renderItemList('found', data);
+    } catch(e){}
+  });
+
+  // FORM STEPS
+  $('step1-next').addEventListener('click', () => {
+    if(!$('f-title').value.trim()) { toast('info','⚠️ Required','Please enter the item title.'); return; }
+    if(!$('f-category').value) { toast('info','⚠️ Required','Please select a category.'); return; }
+    if(!$('f-desc').value.trim()) { toast('info','⚠️ Required','Please add a description.'); return; }
+    goStep(2);
+  });
+  $('step2-back').addEventListener('click', () => goStep(1));
+  $('step2-next').addEventListener('click', () => {
+    if(!$('f-location').value.trim()) { toast('info','⚠️ Required','Please enter the location.'); return; }
+    if(!$('f-date').value) { toast('info','⚠️ Required','Please select the date.'); return; }
+    // Pre-fill contact from logged in user
+    if(currentUser) { $('f-name').value=$('f-name').value||currentUser.name; $('f-email').value=$('f-email').value||currentUser.email; }
+    goStep(3);
+  });
+  $('step3-back').addEventListener('click', () => goStep(2));
+  $('step3-submit').addEventListener('click', submitItem);
+
+  // Image upload
+  $('upload-area').addEventListener('click', () => $('f-image').click());
+  $('f-image').addEventListener('change', function() {
+    const f = this.files[0]; if(!f) return;
+    const r = new FileReader();
+    r.onload = e => { const p=$('img-preview'); p.src=e.target.result; p.style.display='block'; };
+    r.readAsDataURL(f);
+  });
+
+  // Set today's date
+  $('f-date').valueAsDate = new Date();
+
+  // AUTH — LOGIN
+  $('btn-login').addEventListener('click', async function() {
+    const email = $('login-email').value.trim();
+    const pass = $('login-pass').value;
+    if(!email||!pass) { toast('info','⚠️ Missing','Email and password required.'); return; }
+    this.disabled=true; this.textContent='Signing in...';
+    try {
+      const { token, user } = await apiFetch('/auth/login', { method:'POST', body: JSON.stringify({email,password:pass}) });
+      saveUser(token, user);
+      toast('success','✅ Welcome back, '+user.name.split(' ')[0]+'!','Redirecting to dashboard...');
+      $('login-email').value=''; $('login-pass').value='';
+      setTimeout(() => go('dashboard'), 800);
+    } catch(e) {
+      toast('error','Login Failed',e.message);
+    } finally { this.disabled=false; this.textContent='Sign In'; }
+  });
+
+  // AUTH — REGISTER
+  $('btn-signup').addEventListener('click', async function() {
+    const name = $('reg-name').value.trim();
+    const email = $('reg-email').value.trim();
+    const pass = $('reg-pass').value;
+    const phone = $('reg-phone').value.trim();
+    const college = $('reg-college').value.trim();
+    if(!name||!email||!pass) { toast('info','⚠️ Missing','Name, email and password required.'); return; }
+    if(pass.length < 6) { toast('info','⚠️ Password','Minimum 6 characters required.'); return; }
+    this.disabled=true; this.textContent='Creating account...';
+    try {
+      const { token, user } = await apiFetch('/auth/register', { method:'POST', body: JSON.stringify({name,email,password:pass,phone,college}) });
+      saveUser(token, user);
+      toast('success','🎉 Account Created!','Welcome to NIET FoundIt, '+user.name.split(' ')[0]+'!');
+      setTimeout(() => go('dashboard'), 800);
+    } catch(e) {
+      toast('error','Registration Failed',e.message);
+    } finally { this.disabled=false; this.textContent='Create Account'; }
+  });
+
+  // AUTH toggle
+  $('auth-toggle-signup').addEventListener('click', () => {
+    $('auth-form-login').style.display='none'; $('auth-form-signup').style.display='block';
+    $('auth-title').textContent='Create account'; $('auth-sub').textContent='Join FoundIt — NIET Noida.';
+  });
+  $('auth-toggle-login').addEventListener('click', () => {
+    $('auth-form-signup').style.display='none'; $('auth-form-login').style.display='block';
+    $('auth-title').textContent='Welcome back'; $('auth-sub').textContent='Sign in to manage your NIET listings.';
+  });
+
+  // DASHBOARD NAV
+  $('dnav-overview').addEventListener('click', () => switchDashTab('overview'));
+  $('dnav-myitems').addEventListener('click', () => switchDashTab('myitems'));
+  $('dnav-messages').addEventListener('click', () => switchDashTab('messages'));
+  $('dnav-settings').addEventListener('click', () => switchDashTab('settings'));
+  $('dnav-logout').addEventListener('click', logout);
+  $('dnav-back').addEventListener('click', () => go('home'));
+  $('dash-post-new').addEventListener('click', () => go('post'));
+
+  // MY ITEMS FILTER BUTTONS
+  function setMiActive(btn) { ['mi-all','mi-lost','mi-found','mi-resolved'].forEach(id=>$(id).classList.remove('active')); btn.classList.add('active'); }
+  $('mi-all').addEventListener('click', function() { renderMyItems('all'); setMiActive(this); });
+  $('mi-lost').addEventListener('click', function() { renderMyItems('lost'); setMiActive(this); });
+  $('mi-found').addEventListener('click', function() { renderMyItems('found'); setMiActive(this); });
+  $('mi-resolved').addEventListener('click', function() { renderMyItems('resolved'); setMiActive(this); });
+
+  // SETTINGS SAVE
+  $('btn-save-settings').addEventListener('click', () => {
+    if(currentUser) {
+      currentUser.name = $('set-name').value || currentUser.name;
+      currentUser.phone = $('set-phone').value;
+      currentUser.college = $('set-college').value;
+      localStorage.setItem('foundit_user', JSON.stringify(currentUser));
+      updateDashProfile();
+      updateNavForUser();
+      toast('success','✅ Saved!','Profile updated.');
+    }
+  });
+  $('btn-logout').addEventListener('click', logout);
+
+  // MODAL
+  $('modal-close').addEventListener('click', closeModal);
+  $('item-modal').addEventListener('click', e => { if(e.target===$('item-modal')) closeModal(); });
+  $('modal-chat-btn').addEventListener('click', () => {
+    const name = $('modal-contact').textContent;
+    closeModal();
+    openChatWith(name);
+    toast('info','💬 Chat','You can now message the item owner.');
+  });
+  $('modal-claim-btn').addEventListener('click', () => {
+    closeModal();
+    toast('success','Claim Submitted ✅','The item owner has been notified.');
+  });
+
+  // CHAT
+  $('chat-toggle-btn').addEventListener('click', toggleChat);
+  $('chat-close-btn').addEventListener('click', toggleChat);
+  $('chat-send-btn').addEventListener('click', sendMsg);
+  $('chat-input').addEventListener('keydown', e => { if(e.key==='Enter') sendMsg(); });
+
+  // INIT LOAD
+  loadHomeItems();
+  loadStats();
+});
+</script>
+</body>
+</html>
