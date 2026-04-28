@@ -42,7 +42,7 @@
 
 <table>
 <tr>
-<td width="50%">
+<td width="55%">
 
 ### 🎨 Frontend
 - ⚡ **Glassmorphism UI** — frosted glass, dark theme
